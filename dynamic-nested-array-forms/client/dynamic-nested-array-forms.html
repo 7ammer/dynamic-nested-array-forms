@@ -1,0 +1,104 @@
+<head>
+  <title>dynamic-nested-array-forms</title>
+</head>
+
+<body>
+  <h1>Hello :)</h1>
+
+  {{> demoForm}}
+</body>
+
+
+
+<template name="demoForm">
+    <br /><br /><br /><br />
+    <hr /><hr /><hr /><hr />
+    <div class="p2">
+        <h4>My Form</h4>
+        {{#myBasicForm schema=getSchema data=getData action=getAction}}
+            {{#if getData}}
+                {{> dynamicLayoutArray field="layout" context=context data=data}}
+            {{/if}}
+        {{/myBasicForm}}
+    </div>
+  <hr /><hr /><hr /><hr />
+  <br /><br /><br /><br /><br /><br />
+</template>
+
+
+<template name="myBasicForm">
+    <form id="myform">
+        {{> UI.contentBlock data=this.data context=context}}
+        <button class="submitter btn" type="submit">Save</button>
+        <div>
+            {{#if loading}}
+            Loading...
+            {{/if}}
+
+            {{#if invalid}}
+            Can't submit! There are {{invalidCount}} invalid fields!
+            {{/if}}
+
+            {{#if failed}}
+            <strong>{{#if failedMessage}}{{failedMessage}}{{else}}Unable to submit the form.{{/if}}</strong>
+            {{/if}}
+
+            {{#if success}}
+            <strong>{{#if successMessage}}{{successMessage}}{{else}}Saved!{{/if}}</strong>
+            {{/if}}
+        </div>
+    </form>
+</template>
+
+
+<template name="dynamicLayoutArray">
+    <h3>{{label}}</h3>
+    {{#if submitted}}
+        {{#if errorMessage}}<p class="error-message">{{errorMessage}}</p>{{/if}}
+    {{/if}}
+    <button type="button" data-add-item value="hero">Add hero</button>
+    <button type="button" data-add-item value="billboard">Add billboard</button>
+    <ul>
+    {{#each rVal}}
+        <li>
+            <button type="button" class="right" data-remove-item value="{{@index}}">Remove</button><br />
+            {{> inputer field=(getArrayField @index field="layout.$.compName") }} <i>(hidden field)</i><br />
+            {{>Template.dynamic template=this.compName data=(dynamicTemplateData @index)}}
+            <br /><br /><br />
+        </li>
+    {{/each}}
+    </ul>
+    <button type="button" data-add-item value="hero">Add hero</button>
+    <button type="button" data-add-item value="billboard">Add billboard</button>
+</template>
+
+
+<template name="inputer">
+    <b>{{label}}</b> <br />
+    <input placeholder={{schema.defaultValue}} class="block mb1 p1 field col-12 reactive-element" value={{value}}>
+    {{#if submitted}}
+        {{#if errorMessage}}<p class="error-message">{{errorMessage}}</p>{{/if}}
+    {{/if}}
+</template>
+
+
+<template name="hero">
+    <div class="px2 bg-gray border-bottom">
+        <h4 class="m0 py1">Hero component</h4>
+    </div>
+    <div class="p2">
+        {{> inputer field=(getArrayField this.index field="layout.$.hero.title")}}<br />
+        {{> inputer field=(getArrayField this.index field="layout.$.hero.alignment")}}
+    </div>
+</template>
+
+
+<template name="billboard">
+    <div class="px2 bg-gray border-bottom">
+        <h4 class="m0 py1">Billboard component</h4>
+    </div>
+    <div class="p2">
+        {{> inputer field=(getArrayField this.index field="layout.$.billboard.title")}}<br />
+        {{> inputer field=(getArrayField this.index field="layout.$.billboard.background")}}
+    </div>
+</template>
