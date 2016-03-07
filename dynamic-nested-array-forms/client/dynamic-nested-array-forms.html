@@ -13,7 +13,7 @@
 <template name="demoForm">
     <br /><br /><br /><br />
     <hr /><hr /><hr /><hr />
-    <div class="p2">
+    <div>
         <h4>My Form</h4>
         {{#myBasicForm schema=getSchema data=getData action=getAction}}
             {{#if getData}}
@@ -29,7 +29,7 @@
 <template name="myBasicForm">
     <form id="myform">
         {{> UI.contentBlock data=this.data context=context}}
-        <button class="submitter btn" type="submit">Save</button>
+        <button class="submitter" type="submit">Save</button>
         <div>
             {{#if loading}}
             Loading...
@@ -61,7 +61,7 @@
     <ul>
     {{#each rVal}}
         <li>
-            <button type="button" class="right" data-remove-item value="{{@index}}">Remove</button><br />
+            <button type="button" data-remove-item value="{{@index}}">Remove</button><br />
             {{> inputer field=(getArrayField @index field="layout.$.compName") }} <i>(hidden field)</i><br />
             {{>Template.dynamic template=this.compName data=(dynamicTemplateData @index)}}
             <br /><br /><br />
@@ -75,7 +75,7 @@
 
 <template name="inputer">
     <b>{{label}}</b> <br />
-    <input placeholder={{schema.defaultValue}} class="block mb1 p1 field col-12 reactive-element" value={{value}}>
+    <input placeholder={{schema.defaultValue}} class="reactive-element" value={{value}}>
     {{#if submitted}}
         {{#if errorMessage}}<p class="error-message">{{errorMessage}}</p>{{/if}}
     {{/if}}
@@ -83,10 +83,10 @@
 
 
 <template name="hero">
-    <div class="px2 bg-gray border-bottom">
-        <h4 class="m0 py1">Hero component</h4>
+    <div>
+        <h4>Hero component</h4>
     </div>
-    <div class="p2">
+    <div>
         {{> inputer field=(getArrayField this.index field="layout.$.hero.title")}}<br />
         {{> inputer field=(getArrayField this.index field="layout.$.hero.alignment")}}
     </div>
@@ -94,10 +94,10 @@
 
 
 <template name="billboard">
-    <div class="px2 bg-gray border-bottom">
-        <h4 class="m0 py1">Billboard component</h4>
+    <div>
+        <h4>Billboard component</h4>
     </div>
-    <div class="p2">
+    <div>
         {{> inputer field=(getArrayField this.index field="layout.$.billboard.title")}}<br />
         {{> inputer field=(getArrayField this.index field="layout.$.billboard.background")}}
     </div>

@@ -19,14 +19,6 @@ Template.registerHelper('getArrayField', function (index, params) {
     return params.hash.field.replace("$", index);
 });
 
-Template.registerHelper('parentContextFieldValue', function(val){
-    if(Template.instance().reactiveForms.parentData.elementValues[val]){
-        console.log(Template.instance().reactiveForms.parentData.elementValues[val]);
-        return Template.instance().reactiveForms.parentData.elementValues[val].value.get();
-    }
-});
-
-
 
 var hero = new SimpleSchema({
     title: {type: String, label:"Title"},
